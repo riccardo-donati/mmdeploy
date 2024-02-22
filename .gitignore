@@ -11,6 +11,9 @@ mmdeploy_onnx2ncnn
 # Java classes
 *.class
 
+*.onnx
+*.engine
+
 # Distribution / packaging
 .Python
 build/

@@ -70,6 +70,7 @@ class VoxelDetectionModel(BaseBackendModel):
     def forward(self,
                 inputs: dict,
                 data_samples: Optional[List[BaseDataElement]] = None,
+                mode: str = "predict",
                 **kwargs) -> Any:
         """Run forward inference.
 
@@ -98,7 +99,7 @@ class VoxelDetectionModel(BaseBackendModel):
                 outputs[f'dir_cls_pred{i}'] for i in range(num_level)
             ])
         outputs = new_outputs
-        if data_samples is None:
+        if mode == "tensor":
             return outputs
 
         prediction = VoxelDetectionModel.postprocess(
@@ -229,7 +230,10 @@ class VoxelDetectionModel(BaseBackendModel):
         cls_score = outs['cls_score']
         bbox_pred = outs['bbox_pred']
         dir_cls_pred = outs['dir_cls_pred']
-        batch_input_metas = [data_samples.metainfo for data_samples in metas]
+
+        batch_input_metas = None
+        if metas is not None:
+            batch_input_metas = [data_samples.metainfo for data_samples in metas]
 
         head = None
         cfg = None
@@ -252,6 +256,8 @@ class VoxelDetectionModel(BaseBackendModel):
                 batch_input_metas=batch_input_metas,
                 cfg=cfg)
 
+            if metas is None:
+                return data_instances_3d
             data_samples = VoxelDetectionModel.convert_to_datasample(
                 data_samples=metas, data_instances_3d=data_instances_3d)
 

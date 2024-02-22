@@ -2,6 +2,7 @@
 import argparse
 import logging
 import os
+import sys
 import os.path as osp
 from functools import partial
 
@@ -332,4 +333,5 @@ def main():
 
 
 if __name__ == '__main__':
+    sys.path.append("/root/workspace/LidarObjDetection/mmdetection3d_dona/mmdetection3d") # mmdetection local
     main()
