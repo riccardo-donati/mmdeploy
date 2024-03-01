@@ -1,4 +1,7 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+import sys
+sys.path.append("/root/workspace/LidarObjDetection/mmdetection3d_dona/mmdetection3d")
+sys.path.append("/root/workspace/LidarObjDetection/mmdeploy_dona/mmdeploy/")
 import argparse
 import logging
 import os
